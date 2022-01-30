@@ -1,0 +1,83 @@
+.container--app {
+  display: flex;
+  margin: 2rem;
+  border: 1px solid red;
+  height: 500px;
+}
+
+.container--side-panel {
+  flex: 1;
+  border: 1px solid blue;
+}
+
+.container--tabs {
+  /* margin: 1rem; */
+  flex: 3;
+  border: 1px solid green;
+}
+
+.tab-canvas {
+  width: 50px;
+  height: 50px;
+  border: 1px solid grey;
+}
+
+.container--app .container--tabs .nav-tabs {
+  float: left;
+  width: 100%;
+  margin: 0;
+  list-style-type: none;
+  border-bottom: 1px solid rgb(168, 162, 162);
+  padding-left: 0px;
+}
+.container--tabs .nav-tabs > li {
+  float: left;
+  margin-bottom: -1px;
+}
+.container--tabs .nav-tabs > li > a {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  margin-right: 2px;
+  line-height: 1.42857143;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+.container--tabs .nav-tabs > li > a:hover {
+  border-color: #eee #eee #ddd;
+}
+.container--tabs .nav-tabs > li.active > a,
+.container--tabs .nav-tabs > li.active > a:hover,
+.container--tabs .nav-tabs > li.active > a:focus {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid rgb(168, 162, 162);
+  border-bottom-color: transparent;
+}
+.container--tabs .tab-content {
+  float: left;
+  width: 100%;
+  height: 100%;
+  border: 2px solid pink;
+}
+.container--tabs .tab-content > .tab-pane {
+  display: none;
+}
+.container--tabs .tab-content > .tab-pane.active {
+  display: block;
+  padding: 11px 0px;
+  background-color: #efefef;
+  width: 100%;
+  height: 100%;
+}
+.container--tabs .tab-content > .active {
+  display: block;
+}
+
+.full-canvas {
+  width: 70%;
+  height: 50%;
+  border: 1px solid gray;
+}

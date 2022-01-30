@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendulum Canvas</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- <style type="text/css">
+      canvas {
+        border: 1px solid black;
+      }
+      body {
+        margin: 0;
+      }
+    </style> -->
+  </head>
+  <body>
+    <div class="container--app">
+      <div class="container--side-panel"></div>
+      <div class="container--tabs">
+        <section class="row">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#tab-1"
+                >P1<canvas id="PS1" class="tab-canvas"></canvas
+              ></a>
+            </li>
+            <li class="">
+              <a href="#tab-2"
+                >P2<canvas id="P2" class="tab-canvas"></canvas
+              ></a>
+            </li>
+            <li class="">
+              <a href="#tab-3"
+                >P3<canvas id="P3" class="tab-canvas"></canvas
+              ></a>
+            </li>
+            <li class="">
+              <a href="#tab-4"
+                >P4<canvas id="P4" class="tab-canvas"></canvas
+              ></a>
+            </li>
+            <li class="">
+              <a href="#tab-5"
+                >P5<canvas id="P5" class="tab-canvas"></canvas
+              ></a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="tab-1" class="tab-pane active">
+              <span></span>
+              <span class="col-md-10">
+                <h3>Pendulum 1</h3>
+                <canvas id="P1" class="full-canvas"></canvas>
+              </span>
+            </div>
+            <div id="tab-2" class="tab-pane">
+              <span></span>
+              <span>
+                <h3>Pendulum 2</h3>
+                <canvas id="P2" class="full-canvas"></canvas>
+              </span>
+            </div>
+            <div id="tab-3" class="tab-pane">
+              <span></span>
+              <span class="col-md-10">
+                <h3>Pendulum 3</h3>
+                <canvas id="P3" class="full-canvas"></canvas>
+              </span>
+            </div>
+            <div id="tab-4" class="tab-pane">
+              <span></span>
+              <span class="col-md-10">
+                <h3>Pendulum 4</h3>
+                <canvas id="P4" class="full-canvas"></canvas>
+              </span>
+            </div>
+            <div id="tab-5" class="tab-pane">
+              <span></span>
+              <span class="col-md-10">
+                <h3>Pendulum 5</h3>
+                <canvas id="P5" class="full-canvas"></canvas>
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="tabs.js"></script>
+    <script src="canvas.js"></script>
+  </body>
+</html>
