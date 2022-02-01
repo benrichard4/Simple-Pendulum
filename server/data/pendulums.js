@@ -1,3 +1,4 @@
+//used as a make-shift database for testing purposes only. For proper control, and data that persists when the server goes down, must eventually connect to database.
 const pendulums = [
   {
     id: 1,
@@ -11,8 +12,8 @@ const pendulums = [
     gravity: 1,
     angularAccel: 0,
     angularVel: 0,
-    massInitialPosition: { x: 351, y: 375.5 },
-    massCurrentPosition: { x: 351, y: 375.5 },
+    massInitialPosition: { x: 351, y: 375.5, radius: 25 },
+    massCurrentPosition: { x: 351, y: 375.5, radius: 25 },
   },
   {
     id: 2,
@@ -26,8 +27,8 @@ const pendulums = [
     gravity: 1,
     angularAccel: 0,
     angularVel: 0,
-    massInitialPosition: { x: 351, y: 375.5 },
-    massCurrentPosition: { x: 351, y: 375.5 },
+    massInitialPosition: { x: 351, y: 375.5, radius: 25 },
+    massCurrentPosition: { x: 351, y: 375.5, radius: 25 },
   },
   {
     id: 3,
@@ -41,8 +42,8 @@ const pendulums = [
     gravity: 1,
     angularAccel: 0,
     angularVel: 0,
-    massInitialPosition: { x: 351, y: 375.5 },
-    massCurrentPosition: { x: 351, y: 375.5 },
+    massInitialPosition: { x: 351, y: 375.5, radius: 25 },
+    massCurrentPosition: { x: 351, y: 375.5, radius: 25 },
   },
   {
     id: 4,
@@ -56,8 +57,8 @@ const pendulums = [
     gravity: 1,
     angularAccel: 0,
     angularVel: 0,
-    massInitialPosition: { x: 351, y: 375.5 },
-    massCurrentPosition: { x: 351, y: 375.5 },
+    massInitialPosition: { x: 351, y: 375.5, radius: 25 },
+    massCurrentPosition: { x: 351, y: 375.5, radius: 25 },
   },
   {
     id: 5,
@@ -71,8 +72,8 @@ const pendulums = [
     gravity: 1,
     angularAccel: 0,
     angularVel: 0,
-    massInitialPosition: { x: 351, y: 375.5 },
-    massCurrentPosition: { x: 351, y: 375.5 },
+    massInitialPosition: { x: 351, y: 375.5, radius: 25 },
+    massCurrentPosition: { x: 351, y: 375.5, radius: 25 },
   },
 ];
 

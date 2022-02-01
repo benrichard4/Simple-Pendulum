@@ -1,8 +1,11 @@
 const { pendulums } = require("../data/pendulums.js");
 
+//singlteton which is instantiated only once. keeps logic for controlling pendulums and setInterval instances.
+
 class PendulumService {
   intervals = [];
 
+  //function that gets all pendulums
   findAllPendulums() {
     try {
       let allPendulums = pendulums;
@@ -18,6 +21,7 @@ class PendulumService {
     }
   }
 
+  //funciton that finds pendulum
   findPendulum(id) {
     try {
       let foundPendulums = pendulums.find((pendulum) => pendulum.id === id);
@@ -37,13 +41,16 @@ class PendulumService {
     }
   }
 
+  //funcition that controls pendulum's position. Takes in control (start, pause, stop) and a body for new initial parameters
   controlPendulum(id, body) {
     try {
       const { control } = body;
       //---------CONTROL = START-------------
       if (control === "start") {
-        const { origin, armLength, angle, isPaused, isStopped } = body;
+        const { origin, armLength, angle, isPaused, isStopped, initialPos } =
+          body;
 
+        //if the pendulum is not stopped, throw error
         if (isPaused !== false || isStopped !== false) {
           throw { error: "Pendulum not stopped" };
         }
@@ -55,12 +62,13 @@ class PendulumService {
         if (foundPendulum.isPaused === true) {
           foundPendulum.isPaused = isPaused;
 
+          //save instance of interval in interval at position relating to id
           this.intervals[id] = setInterval(() => {
             this.updatePosition(foundPendulum);
           }, 15);
         }
 
-        //if stopped, reset parameters and start over
+        //if stopped, reset parameters from body and start over
         if (foundPendulum.isStopped === true) {
           //set new parameters
           foundPendulum.origin = origin;
@@ -71,9 +79,11 @@ class PendulumService {
           foundPendulum.gravity = 1;
           foundPendulum.angularAccel = 0;
           foundPendulum.angularVel = 0;
+          foundPendulum.massInitialPosition = initialPos;
+          foundPendulum.massInitialPosition.radius = initialPos.radius;
+          foundPendulum.massCurrentPosition.radius = initialPos.radius;
 
           //start pendulum movement:
-
           this.intervals[id] = setInterval(() => {
             this.updatePosition(foundPendulum);
           }, 15);
@@ -90,15 +100,10 @@ class PendulumService {
         if (!("isPaused" in body)) {
           throw { error: 'missing in body "isPaused=true"' };
         }
-        // if (
-        //   foundPendulum.isStopped === true ||
-        //   foundPendulum.isPaused === true
-        // ) {
-        //   throw { error: "Pendulum is already stopped" };
-        // }
 
         foundPendulum.isPaused = isPaused;
 
+        //clear interval to stop updating the position
         clearInterval(this.intervals[id]);
         return `Pendulum ${id} has paused`;
         //---------CONTROL = STOP-------------
@@ -109,13 +114,13 @@ class PendulumService {
         if (!("isStopped" in body)) {
           throw { error: 'missing in body "isStopped=true"' };
         }
-        // if (foundPendulum.isStopped === true) {
-        //   throw { error: "Pendulum is already stopped" };
-        // }
 
+        //update data
         foundPendulum.isPaused = false;
         foundPendulum.isStopped = isStopped;
+        foundPendulum.massCurrentPosition = foundPendulum.massInitialPosition;
 
+        //stop the interval from getting new position data
         clearInterval(this.intervals[id]);
 
         return `Pendulum ${id} has stopped`;
@@ -131,10 +136,13 @@ class PendulumService {
     }
   }
 
+  //helper that updates position of bob/mass
   updatePosition(foundPendulum) {
     let fp = foundPendulum;
     let force = fp.gravity * Math.sin(Number(fp.angle));
+
     fp.angularAccel = (-1 * force) / Number(fp.armLength);
+
     fp.angularVel += fp.angularAccel;
     fp.angle = Number(fp.angle) + fp.angularVel;
 
@@ -142,7 +150,6 @@ class PendulumService {
       fp.origin.x + Number(fp.armLength) * Math.sin(Number(fp.angle));
     fp.massCurrentPosition.y =
       fp.origin.y + Number(fp.armLength) * Math.cos(Number(fp.angle));
-    console.log(fp.id, fp.massCurrentPosition);
   }
 }
 

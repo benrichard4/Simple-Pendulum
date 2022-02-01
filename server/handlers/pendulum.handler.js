@@ -1,13 +1,6 @@
 const { pendulumService } = require("../services/pendulum.service.js");
 
-// createPendulum = (payload) => {
-//   let newPendulum = new Pendulum(payload);
-//   pendulums.push({
-//     id: newPendulum.id,
-//     name:newPendulum.name,
-//   });
-// };
-
+//gets all pendulums
 getAllPendulums = (req, res) => {
   try {
     const allPendulums = pendulumService.findAllPendulums();
@@ -20,6 +13,7 @@ getAllPendulums = (req, res) => {
   }
 };
 
+//gets pendulums by id
 getPendulumById = (req, res) => {
   try {
     const foundPendulum = pendulumService.findPendulum(Number(req.params.id));
@@ -32,6 +26,7 @@ getPendulumById = (req, res) => {
   }
 };
 
+//controls the pendulum, takes in a start, pause or stop control and a body for updating data
 controlPendulum = (req, res) => {
   try {
     const message = pendulumService.controlPendulum(
