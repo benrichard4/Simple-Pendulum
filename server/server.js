@@ -1,31 +1,26 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const PORT = 8000;
 
-const { getPendulumById, controlPendulum } = require("./handlers/pendulum");
+const {
+  getAllPendulums,
+  getPendulumById,
+  controlPendulum,
+} = require("./handlers/pendulum.handler");
 
 express()
+  .use(cors())
   .use(morgan("tiny"))
   .use(express.json())
 
   //routes
-
-  // .get("/", (req, res) => {
-  //   res.status(200).json({ status: 200, message: "Welcome" });
-  // }
-
-  .get("/pendulum/:id", getPendulumById)
-  .get("/pendulum/:id/position", getCurrentPosition)
-  // .patch("/pendulum/:id", updatePosition)
-  .patch("/pendulum/:id/:control", controlPendulum) //updates with most up to date
-  // .patch("/pendulum/:id/pause", pausePendulum)
-  // .patch("/pendulum/:id/stop", stopPendulum)
-
-  //.use(require("./routes/pendulum"))
+  .get("/api/pendulums", getAllPendulums)
+  .get("/api/pendulum/:id", getPendulumById)
+  .patch("/api/pendulum/:id", controlPendulum)
 
   .get("*", (req, res) => {
-    console.log("inside");
     res.status(404).json({
       status: 404,
       message: "This is not what you're looking for",

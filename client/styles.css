@@ -1,28 +1,31 @@
 .container--app {
   display: flex;
   margin: 2rem;
-  border: 1px solid red;
+  border: 3px solid red;
+  width: 700px;
+  /* height: 70vh;
+  max-height: 800px;*/
   height: 500px;
 }
 
-.container--side-panel {
-  flex: 1;
-  border: 1px solid blue;
-}
-
-.container--tabs {
-  /* margin: 1rem; */
+/* .container--tabs {
+  margin: 1rem;
   flex: 3;
-  border: 1px solid green;
-}
+  border: 3px solid rgb(243, 227, 7);
+} */
 
+.row {
+  border: 2px solid purple;
+  width: 100%;
+}
 .tab-canvas {
-  width: 50px;
-  height: 50px;
+  /* position: absolute; */
+  width: 100px;
+  height: 100px;
   border: 1px solid grey;
 }
 
-.container--app .container--tabs .nav-tabs {
+.nav-tabs {
   float: left;
   width: 100%;
   margin: 0;
@@ -30,54 +33,141 @@
   border-bottom: 1px solid rgb(168, 162, 162);
   padding-left: 0px;
 }
-.container--tabs .nav-tabs > li {
+.nav-tabs > li {
   float: left;
-  margin-bottom: -1px;
+  /* margin-bottom: -1px; */
+  position: relative;
+  margin-right: 2px;
+  /* padding-right: 10px; */
 }
-.container--tabs .nav-tabs > li > a {
+.nav-tabs > li > a {
   display: flex;
   flex-direction: column;
   float: left;
-  margin-right: 2px;
+  position: absolute;
+  text-decoration: none;
+
   line-height: 1.42857143;
-  padding: 10px;
+  /* padding: 10px; */
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: 1px solid #eee;
+  border-bottom-color: transparent;
 }
-.container--tabs .nav-tabs > li > a:hover {
-  border-color: #eee #eee #ddd;
+.nav-tabs > li > a:hover {
+  border-color: rgb(207, 205, 205);
+  border-bottom-color: transparent;
 }
-.container--tabs .nav-tabs > li.active > a,
-.container--tabs .nav-tabs > li.active > a:hover,
-.container--tabs .nav-tabs > li.active > a:focus {
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
   color: #555;
   cursor: default;
-  background-color: #fff;
+  /* margin-right: 20px; */
+  /* text-align: center;
+  vertical-align: middle; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding-top: 40px; */
+  background-color: #81b0cc;
   border: 1px solid rgb(168, 162, 162);
   border-bottom-color: transparent;
 }
-.container--tabs .tab-content {
+.tab-content {
   float: left;
   width: 100%;
-  height: 100%;
-  border: 2px solid pink;
+
+  /* border: 2px solid rgb(44, 173, 27); */
 }
-.container--tabs .tab-content > .tab-pane {
+.tab-pane {
   display: none;
 }
-.container--tabs .tab-content > .tab-pane.active {
-  display: block;
+.tab-content > .tab-pane.active {
+  /* display: block; */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
   padding: 11px 0px;
-  background-color: #efefef;
+  background-color: #81b0cc;
   width: 100%;
   height: 100%;
 }
-.container--tabs .tab-content > .active {
+.tab-content > .active {
   display: block;
+  height: 100%;
 }
 
 .full-canvas {
-  width: 70%;
-  height: 50%;
+  /* width: 40vw;
+  height: 30vw; */
+  width: 400px;
+  height: 300px;
+  /* max-width: 400px;
+  max-height: 300px; */
+  /* max-height: 300%; */
+  /* height: 50%; */
+  border: 1px solid rgb(38, 38, 99);
+  background-color: #ffffff;
+}
+
+.canvas-input-container {
+  display: flex;
+  justify-content: space-around;
+  /* align-items: center; */
+  width: 90%;
+  border: 2px solid pink;
+}
+
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  border: 1px solid brown;
+}
+
+.input-container {
+  /* display: flex;
+  flex-direction: column; */
+  flex: 1;
+  padding-top: 10%;
+  border: 1px solid brown;
+}
+
+label {
+  /* text-align: right; */
+  border: 1px solid green;
+  width: 60px;
+}
+
+input {
+  width: 50%;
   border: 1px solid gray;
+  border-radius: 3px;
+}
+
+label + input {
+  width: 50%;
+  /* Large margin-right to force the next element to the new-line
+           and margin-left to create a gutter between the label and input */
+  margin: 0 5% 0 4%;
+}
+
+output {
+  border: 1px solid orange;
+  width: 60px;
+}
+
+.input-group {
+  display: flex;
+  margin: 5px 10px;
+
+  justify-content: space-around;
 }

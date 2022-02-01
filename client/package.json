@@ -1,0 +1,9 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "start http://127.0.0.1:5500/client"
+  },
+  "license": "MIT"
+}

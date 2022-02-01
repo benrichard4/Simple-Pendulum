@@ -1,140 +1,266 @@
-var canvas = document.getElementById("P1");
-console.log(canvas);
-canvas.width = window.innerWidth;
-canvas.height = window.innerWidth;
+canvasDisplay = function () {
+  //get active canvas
+  let currentCanvas = document.getElementsByClassName("tab-pane active");
+  let id = currentCanvas[0].id.charAt(currentCanvas[0].id.length - 1);
 
-// fitToContainer(canvas);
+  playButton = document.getElementById(`play-button-${id}`);
+  pauseButton = document.getElementById(`pause-button-${id}`);
+  stopButton = document.getElementById(`stop-button-${id}`);
 
-// function fitToContainer(canvas) {
-//   // Make it visually fill the positioned parent
-//   canvas.style.width = "100%";
-//   canvas.style.height = "100%";
-//   // ...then set the internal size to match
-//   canvas.width = canvas.offsetWidth;
-//   canvas.height = canvas.offsetHeight;
-// }
+  //canvases
 
-var c = canvas.getContext("2d");
+  let canvas = document.getElementById(`P${id}`);
 
-// c.fillStyle = "rgba(255, 0, 0, 0.5)";
-// c.fillRect(100, 100, 100, 100);
-// c.fillStyle = "rgba(0, 0, 255, 0.5)";
-// c.fillRect(400, 100, 100, 100);
-// c.fillStyle = "rgba(0, 255, 0, 0.5)";
-// c.fillRect(300, 300, 100, 100);
+  canvas.width = 754; //window.innerWidth * (2 / 3);
+  canvas.height = 566; //window.innerWidth * 0.5;
 
-//Line
-// c.beginPath();
-// c.moveTo(50, 300);
-// c.lineTo(300, 100);
-// c.lineTo(400, 300);
-// c.strokeStyle = "blue";
-// c.stroke();
+  let c = canvas.getContext("2d");
+  c.lineWidth = 3;
 
-//arc/circle
-// c.beginPath();
-// c.arc(300, 300, 30, 0, Math.PI * 2, false);
-// c.strokeStyle = "red";
-// c.stroke();
+  let cc = canvasController.pendulums[id - 1];
 
-// for (let i = 0; i < 100; i++) {
-//   var x = Math.random() * window.innerWidth;
-//   var y = Math.random() * window.innerHeight;
-//   colorNumR = Math.random() * 255;
-//   colorNumG = Math.random() * 255;
-//   colorNumB = Math.random() * 255;
-//   c.beginPath();
-//   c.arc(x, y, 30, 0, Math.PI * 2, false);
-//   c.strokeStyle = `rgba(${colorNumR}, ${colorNumG}, ${colorNumB})`;
-//   c.stroke();
-// }
+  // if (!currentPendulumTrigger) {
+  //pendulum values
+  //MASS POSITIONING
 
-// c.beginPath();
-// c.arc(200, 200, 30, 0, Math.PI * 2, false);
-// c.strokeStyle = `blue`;
-// c.stroke();
+  // var mass = {};
+  // mass.x = canvas.width / 2;
+  // mass.y = canvas.width / 2;
+  // mass.radius = 30;
 
-// function Circle(x, y) {
-//   this.x = x;
-//   this.y = y;
+  //ORIGIN
+  // var origin = { x: canvas.width / 2, y: canvas.width / 4 };
 
-//   this.draw = function () {
-//     c.beginPath();
-//     c.arc(x, y, radius, 0, Math.PI * 2, false);
-//     c.strokeStyle = `blue`;
-//     c.stroke();
-//   };
+  //ANGLE
+  angleRad = Math.atan(
+    (cc.massCurrentPosition.x - cc.origin.x) /
+      (cc.massCurrentPosition.y - cc.origin.y)
+  );
 
-//   this.update = function () {};
-// }
+  var angleInput = document.getElementById(`angle-input-${id}`);
+  angleInput.value = angleRad;
 
-// var circle = new Circle(200, 200);
-// circle.draw();
+  //LENGTH
+  var length = Math.sqrt(
+    Math.pow(cc.massCurrentPosition.x - cc.origin.x, 2) +
+      Math.pow(cc.massCurrentPosition.y - cc.origin.y, 2)
+  );
 
-// var x = Math.random() * innerWidth;
-// var y = Math.random() * innerHeight;
-// var dx = (Math.random() - 0.5) * 20;
-// var dy = (Math.random() - 0.5) * 20;
-// var radius = 30;
-// function animate() {
-//   requestAnimationFrame(animate);
+  var lengthInput = document.getElementById(`length-input-${id}`);
+  lengthInput.value = length.toFixed(2);
 
-//   c.clearRect(0, 0, innerWidth, innerHeight);
+  //OTHER
+  var angularVel = 0;
+  var angularAccel = 0;
+  var gravity = 3;
 
-//   circle.draw();
+  draw();
+  // }
 
-//   c.beginPath();
-//   c.arc(x, y, radius, 0, Math.PI * 2, false);
-//   c.strokeStyle = `blue`;
-//   c.stroke();
+  //draw function
+  function draw() {
+    c.clearRect(0, 0, innerWidth, innerHeight);
 
-//   if (x + radius > innerWidth || x - radius < 0) {
-//     dx = -dx;
-//   }
+    //horizontal plan
+    c.beginPath();
+    c.moveTo(cc.origin.x - 20, cc.origin.y);
+    c.lineTo(cc.origin.x + 20, cc.origin.y);
+    c.strokeStyle = "blue";
+    c.stroke();
 
-//   if (y + radius > innerHeight || y - radius < 0) {
-//     dy = -dy;
-//   }
+    // Arm;
+    c.beginPath();
 
-//   x += dx;
-//   y += dy;
-// }
+    c.moveTo(cc.origin.x, cc.origin.y);
+    c.lineTo(cc.massCurrentPosition.x, cc.massCurrentPosition.y);
+    c.strokeStyle = "blue";
+    c.stroke();
 
-let angleRad = Math.PI / 4; //30;
-let angularVel = 0;
-let angularAccel = 0;
-let gravity = 3;
-let length = 300;
-let massRadius = 30;
-let origin = { x: 300, y: 300 };
-let mass = {};
+    // mass
+    c.beginPath();
+    c.arc(
+      cc.massCurrentPosition.x,
+      cc.massCurrentPosition.y,
+      30, //cc.massCurrentPosition.radius,
+      0,
+      Math.PI * 2,
+      false
+    );
+    c.strokeStyle = "blue";
+    c.stroke();
+  }
 
-function animate() {
-  requestAnimationFrame(animate);
-  c.clearRect(0, 0, innerWidth, innerHeight);
+  //adjusting position
+  onMouseMove = (event) => {
+    let mousePos = utils.getMousePos(canvas, event);
+    cc.massCurrentPosition.x = mousePos.x;
+    cc.massCurrentPosition.y = mousePos.y;
+    draw();
+  };
 
-  // let angleRad = (angle * Math.PI) / 180;
+  onMouseUp = (event) => {
+    document.body.removeEventListener("mousemove", onMouseMove);
+    document.body.removeEventListener("mouseup", onMouseUp);
+    lengthInput.value = Math.sqrt(
+      Math.pow(cc.massCurrentPosition.x - cc.origin.x, 2) +
+        Math.pow(cc.massCurrentPosition.y - cc.origin.y, 2)
+    ).toFixed(2);
+    length = lengthInput.value;
+    angleInput.value = Math.atan(
+      (cc.massCurrentPosition.x - cc.origin.x) /
+        (cc.massCurrentPosition.y - cc.origin.y)
+    );
+    angleRad = angleInput.value;
+    draw();
+  };
 
-  let force = gravity * Math.sin(angleRad);
-  angularAccel = (-1 * force) / length;
-  angularVel += angularAccel;
-  angleRad += angularVel;
+  document.body.addEventListener("mousedown", (event) => {
+    let mousePos = utils.getMousePos(canvas, event);
+    if (
+      utils.circlePointCollision(mousePos.x, mousePos.y, {
+        ...cc.massCurrentPosition,
+        radius: 30,
+      })
+    ) {
+      document.body.addEventListener("mousemove", onMouseMove);
+      document.body.addEventListener("mouseup", onMouseUp);
+    }
+  });
 
-  mass.x = origin.x + length * Math.sin(angleRad);
-  mass.y = origin.y + length * Math.cos(angleRad);
+  lengthInput.addEventListener("input", (event) => {
+    length = Number(event.target.value).toFixed(2);
+    angleRad = angleInput.value;
+    cc.massCurrentPosition.x = cc.origin.x + length * Math.sin(angleRad);
+    cc.massCurrentPosition.y = cc.origin.y + length * Math.cos(angleRad);
+    draw();
+  });
 
-  // Arm;
-  c.beginPath();
-  c.moveTo(origin.x, origin.y);
-  c.lineTo(mass.x, mass.y);
-  c.strokeStyle = "blue";
-  c.stroke();
+  angleInput.addEventListener("input", (event) => {
+    angleRad = event.target.value;
+    length = lengthInput.value;
+    cc.massCurrentPosition.x = cc.origin.x + length * Math.sin(angleRad);
+    cc.massCurrentPosition.y = cc.origin.y + length * Math.cos(angleRad);
+    draw();
+  });
 
-  // mass
-  c.beginPath();
-  c.arc(mass.x, mass.y, massRadius, 0, Math.PI * 2, false);
-  c.strokeStyle = "blue";
-  c.stroke();
-}
+  //////////////////////////////////////////////////////////////
+  //CONTROLS                                                  //
+  //////////////////////////////////////////////////////////////
 
-animate();
+  if (!canvasController.canvasTriggers[id - 1]) {
+    playButton.addEventListener("click", onClickPlay);
+    pauseButton.addEventListener("click", onClickPause);
+    stopButton.addEventListener("click", onStop);
+    canvasController.setTrigger(id);
+  }
+
+  //PLAY button controls:
+  function onClickPlay(event) {
+    //onPlay returns a setInterval for the specific canvas
+    onPlay(event).then((res) => canvasController.setCCInterval(res, id));
+  }
+
+  const onPlay = async (event) => {
+    return await fetch(`${PROXY}/api/pendulum/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        origin: cc.origin,
+        armLength: length,
+        angle: angleRad,
+        isPaused: false,
+        isStopped: false,
+        control: "start",
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        return setInterval(() => {
+          getUpdatedPosition(id).then((res) => {
+            cc = res;
+            // length = res.armLength;
+            // angleRad = res.angle;
+            // mass.x = res.massCurrentPosition.x;
+            // mass.y = res.massCurrentPosition.y;
+            draw();
+          });
+        }, 200);
+      })
+      .catch((err) => {});
+  };
+
+  const getUpdatedPosition = async (id) => {
+    return await fetch(`${PROXY}/api/pendulum/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        return json.data;
+      })
+      .catch((err) => {});
+  };
+
+  //pause button controls
+
+  function onClickPause(event) {
+    onPause();
+  }
+  async function onPause(event) {
+    fetch(`${PROXY}/api/pendulum/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        isPaused: true,
+        control: "pause",
+      }),
+    })
+      .then(() => {
+        getUpdatedPosition(id).then((res) => {
+          cc = res;
+          // mass.x = res.massCurrentPosition.x;
+          // mass.y = res.massCurrentPosition.y;
+          draw();
+        });
+        clearInterval(canvasController.intervals[id - 1]);
+        canvasController.intervals[id - 1] = undefined;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  //stop button
+
+  async function onStop(event) {
+    fetch(`${PROXY}/api/pendulum/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        isStopped: true,
+        control: "stop",
+      }),
+    })
+      .then(() => {
+        getUpdatedPosition(id).then((res) => {
+          cc = res;
+          // mass.x = res.massCurrentPosition.x;
+          // mass.y = res.massCurrentPosition.y;
+          draw();
+        });
+
+        clearInterval(canvasController.intervals[id - 1]);
+
+        canvasController.intervals[id - 1] = undefined;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  // animate();
+};
