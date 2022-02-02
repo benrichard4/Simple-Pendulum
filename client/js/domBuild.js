@@ -12,6 +12,7 @@ for (let i = 1; i <= NUMOFPENDULUMS; i++) {
   unorderedList.appendChild(listItem);
 
   const anchorTag = document.createElement("a");
+  anchorTag.id = `anchor-tab-${i}`;
   anchorTag.href = `#tab-${i}`;
   anchorTag.innerText = `P${i}`;
   listItem.appendChild(anchorTag);
@@ -69,6 +70,7 @@ for (let i = 1; i <= NUMOFPENDULUMS; i++) {
 
   const lengthInput = document.createElement("input");
   lengthInput.id = `length-input-${i}`;
+  lengthInput.classList.add("range-bar");
   lengthInput.setAttribute("type", "range");
   lengthInput.setAttribute("min", "40");
   lengthInput.setAttribute("max", "300");
@@ -95,6 +97,7 @@ for (let i = 1; i <= NUMOFPENDULUMS; i++) {
 
   const angleInput = document.createElement("input");
   angleInput.id = `angle-input-${i}`;
+  angleInput.classList.add("range-bar");
   angleInput.setAttribute("type", "range");
   // angleInput.setAttribute("min", `0`);
   // angleInput.setAttribute("max", `${2.01 * Math.PI}`);
@@ -123,9 +126,8 @@ for (let i = 1; i <= NUMOFPENDULUMS; i++) {
 
   const massInput = document.createElement("input");
   massInput.id = `mass-input-${i}`;
+  massInput.classList.add("range-bar");
   massInput.setAttribute("type", "range");
-  // massInput.setAttribute("min", `0`);
-  // massInput.setAttribute("max", `${2.01 * Math.PI}`);
   massInput.setAttribute("min", `5`);
   massInput.setAttribute("max", `50`);
   massInput.setAttribute("step", "5");

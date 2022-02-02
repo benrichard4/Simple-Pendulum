@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   margin: 2rem auto;
-  /* border: 1px solid darkblue; */
   width: 700px;
   height: 500px;
 }
@@ -25,14 +24,12 @@ h3 {
 }
 
 .row {
-  /* border: 2px solid purple; */
   width: 100%;
 }
 
 .tab-canvas {
   width: 100px;
   height: 30px;
-  /* border: 1px solid grey; */
 }
 
 .nav-tabs {
@@ -40,7 +37,6 @@ h3 {
   width: 100%;
   margin: 0;
   list-style-type: none;
-  /* border-bottom: 1px solid rgb(168, 162, 162); */
   padding-left: 0px;
   z-index: -1;
 }
@@ -48,9 +44,10 @@ h3 {
   float: left;
   position: relative;
   margin-right: 2px;
-  background-color: #0769a1;
+  background-color: rgb(20, 36, 59);
   border-radius: 4px 4px 0 0;
 }
+
 .nav-tabs > li > a {
   display: flex;
   justify-content: center;
@@ -68,12 +65,18 @@ h3 {
   font-family: "Roboto", sans-serif;
   border: 1px solid white;
   border-bottom-color: transparent;
-  /* box-shadow: inset 0px 5px 10px -20px rgb(61, 60, 60); */
 }
+
+.being-played {
+  color: mediumseagreen !important;
+}
+
+.nav-tabs > li.active > a.being-played {
+  color: black !important;
+}
+
 .nav-tabs > li > a:hover {
-  /* border-color: rgb(128, 127, 127);
-  border-bottom-color: transparent; */
-  background-color: #3f80a7;
+  background-color: rgb(0, 39, 124);
 }
 
 .nav-tabs > li.active > a,
@@ -85,13 +88,10 @@ h3 {
   border: none;
   width: 100%;
   height: 100%;
-  /* border: 1px solid rgb(168, 162, 162);
-  border-bottom-color: transparent; */
 }
 .tab-content {
   float: left;
   width: 100%;
-  /* border: 2px solid rgb(44, 173, 27); */
 }
 .tab-pane {
   display: none;
@@ -124,7 +124,6 @@ h3 {
   display: flex;
   justify-content: space-around;
   width: 90%;
-  /* border: 2px solid pink; */
 }
 
 .canvas-container {
@@ -133,25 +132,20 @@ h3 {
   justify-content: center;
   align-items: center;
   flex: 1;
-  /* border: 1px solid brown; */
 }
 
 .input-container {
   flex: 1;
   padding-left: 10px;
   padding-top: 10%;
-  /* border: 1px solid brown; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  /* align-items: flex-end; */
-  /* gap: 20px 0; */
 }
 
 .adjustable-input {
   display: flex;
   flex-direction: column;
-  /* border: 2px solid yellow; */
 }
 
 .input-group {
@@ -159,11 +153,9 @@ h3 {
   margin: 5px;
   margin-right: 0px;
   justify-content: space-between;
-  /* border: 2px solid darkmagenta; */
 }
 
 label {
-  /* border: 1px solid green; */
   width: 60px;
   font-family: "Roboto", sans-serif;
   font-size: 15px;
@@ -181,7 +173,6 @@ label + input {
 }
 
 output {
-  /* border: 1px solid orange; */
   width: 50px;
   text-align: right;
   font-family: "Roboto", sans-serif;
@@ -189,7 +180,7 @@ output {
 }
 
 button {
-  background-color: rgb(0, 39, 124);
+  background-color: rgb(20, 36, 59);
   color: white;
   width: 55px;
   height: 55px;
@@ -199,17 +190,18 @@ button {
 }
 
 button:hover {
-  transform: scale(1.01);
-  /* box-shadow: 0 0 6px rgb(97, 96, 96); */
+  font-size: 14px;
+  color: mediumseagreen;
   cursor: pointer;
 }
 
 button:disabled {
-  /* color: black; */
   box-shadow: inset 0 0 6px rgb(61, 60, 60);
   text-shadow: 0 0 6px rgb(48, 46, 46);
   background-color: rgb(184, 179, 179);
+  color: white;
   cursor: pointer;
   transform: none;
   cursor: default;
+  font-size: 13.333px;
 }

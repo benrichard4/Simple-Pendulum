@@ -1,6 +1,6 @@
 const { pendulums } = require("../data/pendulums.js");
 
-//singlteton which is instantiated only once. keeps logic for controlling pendulums and setInterval instances.
+//PendulumService is only instantiated only once. keeps logic for controlling pendulums through database (data file) and setInterval instances.
 
 class PendulumService {
   intervals = [];

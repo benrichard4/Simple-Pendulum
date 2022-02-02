@@ -14,9 +14,12 @@ canvasDisplay = function () {
   c.lineWidth = 3;
 
   //define control buttons
-  playButton = document.getElementById(`play-button-${id}`);
-  pauseButton = document.getElementById(`pause-button-${id}`);
-  stopButton = document.getElementById(`stop-button-${id}`);
+  let playButton = document.getElementById(`play-button-${id}`);
+  let pauseButton = document.getElementById(`pause-button-${id}`);
+  let stopButton = document.getElementById(`stop-button-${id}`);
+
+  //define current Tab
+  let currentTab = document.getElementById(`anchor-tab-${id}`);
 
   //define shortcut for location in pendulums in canvasController
   let cc = canvasController.pendulums[id - 1];
@@ -38,11 +41,6 @@ canvasDisplay = function () {
   massInput.value = Number(cc.massCurrentPosition.radius);
   massInput.nextElementSibling.value = Number(massInput.value);
 
-  //OTHER not used for now
-  var angularVel = 0;
-  var angularAccel = 0;
-  var gravity = 3;
-
   //call draw function
   draw();
 
@@ -54,14 +52,14 @@ canvasDisplay = function () {
     c.beginPath();
     c.moveTo(cc.origin.x - 20, cc.origin.y);
     c.lineTo(cc.origin.x + 20, cc.origin.y);
-    c.strokeStyle = "rgb(0, 39, 124)";
+    c.strokeStyle = "rgb(20, 36, 59);";
     c.stroke();
 
     // Arm;
     c.beginPath();
     c.moveTo(cc.origin.x, cc.origin.y);
     c.lineTo(cc.massCurrentPosition.x, cc.massCurrentPosition.y);
-    c.strokeStyle = "rgb(0, 39, 124)";
+    c.strokeStyle = "rgb(20, 36, 59);";
     c.stroke();
 
     // mass
@@ -74,14 +72,20 @@ canvasDisplay = function () {
       Math.PI * 2,
       false
     );
-    c.strokeStyle = "rgb(0, 39, 124)";
-    c.fillStyle = "rgb(0, 39, 124)";
+    c.strokeStyle = "rgb(20, 36, 59);";
+    c.fillStyle = "rgb(20, 36, 59);";
     c.fill();
     c.stroke();
   }
 
+  //////////////////////////////////////////////////////////////
+  //EVENT LISTENERS                                           //
+  //////////////////////////////////////////////////////////////
   //event listener for canvas when clicked inside
   canvas.addEventListener("mousedown", onMouseDown);
+  if (canvasController.canvasTriggers[id - 1]) {
+    canvas.removeEventListener("mousedown", onMouseDown);
+  }
 
   //controls what happens when the mass/bob is clicked. If there is a collision, continue to mousemove and mouseup functions
   function onMouseDown(event) {
@@ -161,15 +165,17 @@ canvasDisplay = function () {
     cc.massInitialPosition.radius = event.target.value;
     draw();
   });
+
   //////////////////////////////////////////////////////////////
   //CONTROLS                                                  //
   //////////////////////////////////////////////////////////////
-
   //only add an event listener the first time, the tab is click and canvas function is called
+
   if (!canvasController.canvasTriggers[id - 1]) {
     playButton.addEventListener("click", onClickPlay);
     pauseButton.addEventListener("click", onClickPause);
     stopButton.addEventListener("click", onClickStop);
+
     canvasController.setTrigger(id);
   }
 
@@ -183,6 +189,8 @@ canvasDisplay = function () {
     lengthInput.disabled = true;
     angleInput.disabled = true;
     massInput.disabled = true;
+
+    currentTab.classList.add("being-played");
     //onPlay returns a setInterval for the specific canvas
     onPlay(event).then((res) => canvasController.setCCInterval(res, id));
   }
@@ -230,15 +238,19 @@ canvasDisplay = function () {
       });
   };
 
-  //pause button controls
+  //PAUSE button controls
 
   function onClickPause() {
+    canvas.removeEventListener("mousedown", onMouseDown);
     playButton.disabled = false;
     pauseButton.disabled = true;
     stopButton.disabled = false;
     lengthInput.disabled = true;
     angleInput.disabled = true;
     massInput.disabled = true;
+
+    currentTab.classList.remove("being-played");
+
     onPause();
   }
   async function onPause() {
@@ -268,8 +280,7 @@ canvasDisplay = function () {
       });
   }
 
-  //stop button
-
+  //STOP button controls
   function onClickStop() {
     canvas.addEventListener("mousedown", onMouseDown);
     playButton.disabled = false;
@@ -278,6 +289,7 @@ canvasDisplay = function () {
     lengthInput.disabled = false;
     angleInput.disabled = false;
     massInput.disabled = false;
+    currentTab.classList.remove("being-played");
     onStop();
   }
 
