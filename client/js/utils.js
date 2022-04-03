@@ -6,7 +6,7 @@ var utils = {
     return Math.sqrt(dx * dx + dy * dy);
   },
 
-  //funciton that takes in a point and a circle object (midpoint & radius) and returns true if there is a collission
+  //function that takes in a point and a circle object (midpoint & radius) and returns true if there is a collission
   circlePointCollision: function (x, y, circle) {
     return utils.distanceXY(x, y, circle.x, circle.y) < circle.radius;
   },
