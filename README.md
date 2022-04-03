@@ -15,5 +15,5 @@ STARTING THE APPLICATION IN BROWSER (2 methods):
 
 2. Open live server:
    From the explorer, right click the "index.html" file and click, "Open with Live Server"
-
+ 
 ![Screenshot Preview](./client/assets/Screenshot_application.png)
